@@ -4,17 +4,17 @@ import sched
 import time
 from datetime import timedelta
 
-from pyprika.data.local.domain_data_store import DomainDataStore
-from pyprika.data.remote.paprika_client import PaprikaClient
-from pyprika.domain.specifications.category_specification import CategorySpecification
-from pyprika.domain.work_units.create_filter_specification import CreateFilterSpecification
-from pyprika.domain.work_units.fetch_data import FetchData
-from pyprika.domain.work_units.filter_recipes import FilterRecipes
-from pyprika.domain.work_units.link_models import LinkModels
-from pyprika.domain.work_units.store_models import StoreModels
-from pyprika.domain.work_units.transform_models import TransformModels
-from pyprika.framework.containers.data_container import DataContainer
-from pyprika.framework.containers.work_unit_container import WorkUnitContainer
+from .data.local.domain_data_store import DomainDataStore
+from .data.remote.paprika_client import PaprikaClient
+from .domain.specifications.category_specification import CategorySpecification
+from .domain.work_units.create_filter_specification import CreateFilterSpecification
+from .domain.work_units.fetch_data import FetchData
+from .domain.work_units.filter_recipes import FilterRecipes
+from .domain.work_units.link_models import LinkModels
+from .domain.work_units.store_models import StoreModels
+from .domain.work_units.transform_models import TransformModels
+from .framework.containers.data_container import DataContainer
+from .framework.containers.work_unit_container import WorkUnitContainer
 
 
 class Pyprika:
