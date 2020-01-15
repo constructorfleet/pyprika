@@ -43,9 +43,9 @@ class Status:
         return self.bookmarks
 
     @property
-    def menuitems(self):
-        """Get the number of menuitems."""
-        return self.menuitems
+    def menu_items(self):
+        """Get the number of menu items."""
+        return self.menu_items
 
     @property
     def categories(self):
