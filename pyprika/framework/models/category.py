@@ -1,10 +1,11 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class Category:
+class Category(BaseModel):
     """Model for category resource."""
 
-    __slots__ = ['name', 'uid', 'parent_uid', 'order_flag', 'parent_category']
+    __slots__ = ['name', 'uid', 'parent_uid', 'order_flag']
 
     @staticmethod
     def from_json(category_json):
@@ -16,12 +17,11 @@ class Category:
             category_json.get('order_flag', None)
         )
 
-    @staticmethod
-    def assign_parent_category(category, categories):
-        """Assign the parent category object to category."""
-        category.parent_category = next(
-            (parent_category for parent_category in categories if parent_category.uid == category.parent_uid), None)
-
     def __init__(self, name, uid, parent_uid, order_flag):
         """Initialize the model."""
         auto_init()
+        self.parent_category = None
+
+    async def link_to(self, categories):
+        self.parent_category = next(
+            (parent_category for parent_category in categories if parent_category.uid == self.parent_uid), None)

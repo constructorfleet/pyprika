@@ -9,7 +9,7 @@ _LOGGER = logging.getLogger(__name__)
 async def main():
     client = PaprikaClient("alan.janis@gmail.com", "}Jj8c2uWNV{3uTc+XAFB")
     await client.fetch_all()
-    _LOGGER.warning("{}".format(client.get_recipes()))
+    _LOGGER.warning("{}".format(client.get_groceries()))
 
 
 if __name__ == __name__:

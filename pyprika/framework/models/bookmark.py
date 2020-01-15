@@ -1,7 +1,8 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class Bookmark:
+class Bookmark(BaseModel):
     """Model for bookmark resources."""
 
     __slots__ = ['url', 'title', 'uid', 'order_flag']
@@ -19,3 +20,6 @@ class Bookmark:
     def __init__(self, url, title, uid, order_flag):
         """Initialize model."""
         auto_init()
+
+    async def link_to(self):
+        pass

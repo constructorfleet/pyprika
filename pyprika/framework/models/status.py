@@ -1,7 +1,8 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class Status:
+class Status(BaseModel):
     """Model for status resource."""
 
     __slots__ = ['recipes', 'pantry', 'meals', 'menus', 'groceries', 'bookmarks', 'menu_items', 'categories']
@@ -23,3 +24,6 @@ class Status:
     def __init__(self, recipes, pantry, meals, menus, groceries, bookmarks, menu_items, categories):
         """Initialize the model."""
         auto_init()
+
+    async def link_to(self, *args):
+        pass

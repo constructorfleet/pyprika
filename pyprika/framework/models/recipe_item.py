@@ -1,7 +1,8 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class RecipeItem:
+class RecipeItem(BaseModel):
     """Model for recipe item resource."""
 
     __slots__ = ['hash', 'uid']
@@ -17,3 +18,6 @@ class RecipeItem:
     def __init__(self, hash, uid):
         """Initialize the model."""
         auto_init()
+
+    async def link_to(self, *args):
+        pass

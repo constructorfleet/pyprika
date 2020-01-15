@@ -1,7 +1,8 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class PantryItem:
+class PantryItem(BaseModel):
     """Model for pantry item resource."""
 
     __slots__ = ['aisle', 'ingredient', 'uid']
@@ -18,3 +19,6 @@ class PantryItem:
     def __init__(self, aisle, ingredient, uid):
         """Initialize the model."""
         auto_init()
+
+    async def link_to(self, *args):
+        pass

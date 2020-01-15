@@ -1,7 +1,8 @@
 from pyprika.common.utils import auto_init
+from pyprika.framework.models.base_model import BaseModel
 
 
-class Recipe:
+class Recipe(BaseModel):
     """Model for recipe resource."""
 
     __slots__ = ['rating', 'photo_hash', 'on_favorites', 'photo', 'scale', 'ingredients', 'source', 'hash',
@@ -40,3 +41,11 @@ class Recipe:
                  nutritional_info, uid):
         """Initialize the model."""
         auto_init()
+
+    async def link_to(self, categories):
+        linked_categories = []
+        for category_name in self.categories:
+            linked_categories.append(
+                next((category for category in categories if category.name == category_name), category_name))
+
+        setattr(self, 'categories', linked_categories)
