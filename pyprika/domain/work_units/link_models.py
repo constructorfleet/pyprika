@@ -1,12 +1,15 @@
+from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
 
 class LinkModels(WorkUnit):
     """Unit of work linking models via relational ids."""
 
-    def __init__(self):
+    __slots__ = ['store_models']
+
+    def __init__(self, store_models):
         """Initialize unit of work."""
-        pass
+        auto_init()
 
     async def perform_work(self, model_container):
         """Perform work unit."""
@@ -21,3 +24,5 @@ class LinkModels(WorkUnit):
 
         for grocery_item in model_container.groceries:
             grocery_item.link_to(model_container.recipes)
+
+        self.store_models.perform_work(model_container)

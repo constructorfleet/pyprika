@@ -7,7 +7,7 @@ import async_timeout
 from aiohttp import BasicAuth, ClientSession
 from aiohttp.hdrs import USER_AGENT, ACCEPT
 
-from ..const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
+from pyprika.const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
 
 _LOGGER = logging.getLogger(__name__)
 

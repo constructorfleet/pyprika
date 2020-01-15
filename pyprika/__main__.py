@@ -1,7 +1,7 @@
 import asyncio
 import logging
 
-from pyprika.data.paprika_client import PaprikaClient
+from pyprika.data.remote.paprika_client import PaprikaClient
 
 _LOGGER = logging.getLogger(__name__)
 
