@@ -1,5 +1,4 @@
 """Menu item data model."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -21,7 +20,11 @@ class MenuItem(BaseModel):
 
     def __init__(self, name, uid, menu_uid, recipe_uid, order_flag):
         """Initialize model."""
-        auto_init()
+        self.name = name
+        self.uid = uid
+        self.menu_uid = menu_uid
+        self.recipe_uid = recipe_uid
+        self.order_flag = order_flag
         self.menu = None
         self.recipe = None
 

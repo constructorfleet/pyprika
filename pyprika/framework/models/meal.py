@@ -1,5 +1,4 @@
 """Meal data model"""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -22,7 +21,12 @@ class Meal(BaseModel):
 
     def __init__(self, name, meal_type, meal_date, uid, recipe_uid, order_flag):
         """Initialize the model."""
-        auto_init()
+        self.name = name
+        self.type = meal_type
+        self.date = meal_date
+        self.uid = uid
+        self.recipe_uid = recipe_uid
+        self.order_flag = order_flag
         self.recipe = None
 
     async def link_to(self, recipes):

@@ -1,5 +1,4 @@
 """Data layer container for IoC."""
-from pyprika.common.utils import auto_init
 
 
 class DataContainer:
@@ -8,4 +7,5 @@ class DataContainer:
 
     def __init__(self, client, domain_data_store):
         """Initialize Container."""
-        auto_init()
+        self.client = client
+        self.domain_data_store = domain_data_store

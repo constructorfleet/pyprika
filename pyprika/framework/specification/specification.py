@@ -1,3 +1,9 @@
+from pyprika.framework.specification.operators.And import And
+from pyprika.framework.specification.operators.Invert import Invert
+from pyprika.framework.specification.operators.Or import Or
+from pyprika.framework.specification.operators.Xor import Xor
+
+
 class Specification:
 
     def __and__(self, other):

@@ -1,5 +1,5 @@
 """Recipe data model."""
-from pyprika.common.utils import auto_init
+
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -40,12 +40,30 @@ class Recipe(BaseModel):
         )
 
     def __init__(self, rating, photo_hash, on_favorites, photo, scale, ingredients, source, hash,
-                 source_url,
-                 difficulty, categories, photo_url, cook_time, name, created, notes, image_url,
-                 prep_time, servings,
-                 nutritional_info, uid):
+                 source_url, difficulty, categories, photo_url, cook_time, name, created, notes,
+                 image_url, prep_time, servings, nutritional_info, uid):
         """Initialize the model."""
-        auto_init()
+        self.rating = rating
+        self.photo_hash = photo_hash
+        self.on_favorites = on_favorites
+        self.photo = photo
+        self.scale = scale
+        self.ingredients = ingredients
+        self.source = source
+        self.hash = hash
+        self.source_url = source_url
+        self.difficulty = difficulty
+        self.categories = categories
+        self.photo_url = photo_url
+        self.cook_time = cook_time
+        self.name = name
+        self.created = created
+        self.notes = notes
+        self.image_url = image_url
+        self.prep_time = prep_time
+        self.servings = servings
+        self.nutritional_info = nutritional_info
+        self.uid = uid
 
     async def link_to(self, categories):
         """Link to associated categories."""

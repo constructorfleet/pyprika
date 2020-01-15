@@ -1,5 +1,4 @@
 """Bookmark resource."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -20,7 +19,10 @@ class Bookmark(BaseModel):
 
     def __init__(self, url, title, uid, order_flag):
         """Initialize model."""
-        auto_init()
+        self.url = url
+        self.title = title
+        self.uid = uid
+        self.order_flag = order_flag
 
     async def link_to(self):
         pass

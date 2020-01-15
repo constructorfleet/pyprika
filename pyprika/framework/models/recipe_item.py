@@ -1,5 +1,4 @@
 """Tiny model containing the uid of recipe models."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -18,7 +17,8 @@ class RecipeItem(BaseModel):
 
     def __init__(self, hash, uid):
         """Initialize the model."""
-        auto_init()
+        self.hash = hash
+        self.uid = uid
 
     async def link_to(self, *args):
         """Nothing to link to."""

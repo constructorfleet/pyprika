@@ -1,5 +1,4 @@
 """Specification matching for recipe name."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.specification.specification import Specification
 
 
@@ -8,9 +7,9 @@ class NameSpecification(Specification):
 
     __slots__ = ['name']
 
-    def __init__(self):
+    def __init__(self, name):
         """Initialize specification."""
-        auto_init()
+        self.name = name
 
     def is_satisfied_by(self, candidate):
         """Checks if candidate satisfies condition."""

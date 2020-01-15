@@ -1,5 +1,4 @@
 """Unit of work that fetches data from backend servers."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
 
@@ -10,7 +9,9 @@ class FetchData(WorkUnit):
 
     def __init__(self, client, transform_models, domain_data_store):
         """Initialize unit of work."""
-        auto_init()
+        self.client = client
+        self.transform_models = transform_models
+        self.domain_data_store = domain_data_store
 
     async def perform_work(self):
         """Perform work unit."""

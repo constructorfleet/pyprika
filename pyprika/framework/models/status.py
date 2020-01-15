@@ -1,5 +1,4 @@
 """User recipe book status model."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -25,7 +24,14 @@ class Status(BaseModel):
 
     def __init__(self, recipes, pantry, meals, menus, groceries, bookmarks, menu_items, categories):
         """Initialize the model."""
-        auto_init()
+        self.recipes = recipes
+        self.pantry = pantry
+        self.meals = meals
+        self.menus = menus
+        self.groceries = groceries
+        self.bookmarks = bookmarks
+        self.menu_items = menu_items
+        self.categories = categories
 
     async def link_to(self, *args):
         """Nothing to link to."""

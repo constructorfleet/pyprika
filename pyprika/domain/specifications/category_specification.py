@@ -1,5 +1,4 @@
 """Specification matching for category."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.specification.specification import Specification
 
 
@@ -10,7 +9,7 @@ class CategorySpecification(Specification):
 
     def __init__(self, category):
         """Initialize specification."""
-        auto_init()
+        self.category = category
 
     def is_satisfied_by(self, candidate):
         """Checks if candidate satisfies condition."""

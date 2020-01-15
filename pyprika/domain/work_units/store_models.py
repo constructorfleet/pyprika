@@ -1,5 +1,4 @@
 """Unit of work to store retrieved data in local data store."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
 
@@ -10,7 +9,7 @@ class StoreModels(WorkUnit):
 
     def __init__(self, domain_data_store):
         """Initialize the unit of work."""
-        auto_init()
+        self.domain_data_store = domain_data_store
 
     async def perform_work(self, model_container):
         """Perform unit of work."""

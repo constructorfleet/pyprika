@@ -1,5 +1,4 @@
 """IoC Container for Injecting WorkUnits."""
-from pyprika.common.utils import auto_init
 
 
 class WorkUnitContainer:
@@ -15,4 +14,9 @@ class WorkUnitContainer:
                  filter_recipes,
                  create_filter_specifications):
         """Initialize container."""
-        auto_init()
+        self.fetch_data = fetch_data
+        self.transform_models = transform_models
+        self.link_models = link_models
+        self.store_models = store_models
+        self.filter_recipes = filter_recipes
+        self.create_filter_specifications = create_filter_specifications

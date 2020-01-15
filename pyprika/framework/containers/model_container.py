@@ -1,5 +1,4 @@
 """Container for transformed data models."""
-from pyprika.common.utils import auto_init
 
 
 class ModelContainer:
@@ -7,7 +6,15 @@ class ModelContainer:
     __slots__ = ['bookmarks', 'categories', 'groceries', 'meals', 'menus', 'menu_items', 'pantry',
                  'recipes', 'status']
 
-    def __init__(self, bookmarks, categories, groceries, meals, menus, menu_items, pantry, recipe,
+    def __init__(self, bookmarks, categories, groceries, meals, menus, menu_items, pantry, recipes,
                  status):
         """Initialize container."""
-        auto_init()
+        self.bookmarks = bookmarks
+        self.categories = categories
+        self.groceries = groceries
+        self.meals = meals
+        self.menus = menus
+        self.menu_items = menu_items
+        self.pantry = pantry
+        self.recipes = recipes
+        self.status = status

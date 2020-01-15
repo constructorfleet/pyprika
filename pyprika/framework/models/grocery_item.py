@@ -1,5 +1,4 @@
 """Grocery data model."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -24,7 +23,13 @@ class GroceryItem(BaseModel):
 
     def __init__(self, name, ingredient, recipe_name, purchased, uid, recipe_uid, order_flag):
         """Initialize the model."""
-        auto_init()
+        self.name = name
+        self.ingredient = ingredient
+        self.recipe_name = recipe_name
+        self.purchased = purchased
+        self.uid = uid
+        self.recipe_uid = recipe_uid
+        self.order_flag = order_flag
 
         self.recipe = None
 

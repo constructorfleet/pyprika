@@ -88,7 +88,7 @@ class PaprikaClient:
                 recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
                 tasks = [asyncio.ensure_future(
                     _fetch(RECIPE_ENDPOINT % recipe_item['uid'], session, ATTR_RECIPES)) for
-                         recipe_item in recipe_items if recipe_item.get('uid', None)]
+                    recipe_item in recipe_items if recipe_item.get('uid', None)]
                 fetch_results = await asyncio.gather(*tasks)
                 self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
             except AttributeError:

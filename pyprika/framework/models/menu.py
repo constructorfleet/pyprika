@@ -1,5 +1,4 @@
 """Menu data model."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
 
@@ -20,7 +19,10 @@ class Menu(BaseModel):
 
     def __init__(self, name, notes, uid, order_flag):
         """Initialize model."""
-        auto_init()
+        self.name = name
+        self.notes = notes
+        self.uid = uid
+        self.order_flag = order_flag
 
     async def link_to(self, *args):
         """Nothing to link to."""

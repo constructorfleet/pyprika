@@ -1,5 +1,4 @@
 """Unit of work to link related models via relational identifier."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
 
@@ -10,7 +9,7 @@ class LinkModels(WorkUnit):
 
     def __init__(self, store_models):
         """Initialize unit of work."""
-        auto_init()
+        self.store_models = store_models
 
     async def perform_work(self, model_container):
         """Perform work unit."""

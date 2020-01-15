@@ -1,5 +1,4 @@
 """Uni of work that transforms JSON data to data models."""
-from pyprika.common.utils import auto_init
 from pyprika.framework.containers.model_container import ModelContainer
 from pyprika.framework.models.bookmark import Bookmark
 from pyprika.framework.models.category import Category
@@ -20,7 +19,7 @@ class TransformModels(WorkUnit):
 
     def __init__(self, link_models):
         """Initialize unit of work."""
-        auto_init()
+        self.link_models = link_models
 
     async def perform_work(self, bookmarks, categories, groceries, meals, menus, menu_items,
                            pantry_items, recipes,

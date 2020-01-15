@@ -2,7 +2,6 @@
 import logging
 
 from pyprika import CategorySpecification
-from pyprika.common.utils import auto_init
 from pyprika.domain.specifications.difficulty_specification import DifficultySpecification
 from pyprika.domain.specifications.duration_specification import DurationSpecification
 from pyprika.domain.specifications.name_specification import NameSpecification
@@ -33,7 +32,7 @@ class CreateFilterSpecification(WorkUnit):
     __slots__ = ['filter_recipes']
 
     def __init__(self, filter_recipes):
-        auto_init()
+        self.filter_recipes = filter_recipes
 
     async def perform_work(self,
                            categories=None,
