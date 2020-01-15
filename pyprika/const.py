@@ -1,3 +1,4 @@
-BASE_URL = "https://www.paprikaapp.com/api/v1/sync/"
-USER_AGENT = "Pyprika Python Library"
+BASE_URL = 'https://www.paprikaapp.com/api/v1/sync/'
 
+CLIENT_USER_AGENT = 'Pyprika Python Library'
+APPLICATION_JSON = 'application/json'
