@@ -1,5 +1,15 @@
 class Menu:
     """Model for the menu resource."""
+
+    @staticmethod
+    def from_json(json_response):
+        """Create model from json."""
+        return Menu(
+            json_response.get('name', None),
+            json_response.get('notes', None),
+            json_response.get('uid', None),
+            json_response.get('order_flag', None)
+        )
     
     def __init__(self, name, notes, uid, order_flag):
         """Initialize model."""
@@ -7,7 +17,7 @@ class Menu:
         self._notes = notes
         self._uid = uid
         self._order_flag = order_flag
-        
+
     @property
     def name(self):
         """Get the name of the menu."""
