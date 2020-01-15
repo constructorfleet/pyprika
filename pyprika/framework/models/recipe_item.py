@@ -1,3 +1,4 @@
+"""Tiny model containing the uid of recipe models."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -20,4 +21,5 @@ class RecipeItem(BaseModel):
         auto_init()
 
     async def link_to(self, *args):
+        """Nothing to link to."""
         pass

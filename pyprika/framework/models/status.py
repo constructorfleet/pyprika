@@ -1,3 +1,4 @@
+"""User recipe book status model."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -5,7 +6,8 @@ from pyprika.framework.models.base_model import BaseModel
 class Status(BaseModel):
     """Model for status resource."""
 
-    __slots__ = ['recipes', 'pantry', 'meals', 'menus', 'groceries', 'bookmarks', 'menu_items', 'categories']
+    __slots__ = ['recipes', 'pantry', 'meals', 'menus', 'groceries', 'bookmarks', 'menu_items',
+                 'categories']
 
     @staticmethod
     def from_json(status_json):
@@ -26,4 +28,5 @@ class Status(BaseModel):
         auto_init()
 
     async def link_to(self, *args):
+        """Nothing to link to."""
         pass

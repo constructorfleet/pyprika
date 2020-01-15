@@ -1,3 +1,4 @@
+"""Grocery data model."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -5,7 +6,8 @@ from pyprika.framework.models.base_model import BaseModel
 class GroceryItem(BaseModel):
     """Model for grocery item resource."""
 
-    __slots__ = ['name', 'ingredient', 'recipe_name', 'purchased', 'uid', 'recipe_uid', 'order_flag']
+    __slots__ = ['name', 'ingredient', 'recipe_name', 'purchased', 'uid', 'recipe_uid',
+                 'order_flag']
 
     @staticmethod
     def from_json(grocery_json):
@@ -27,4 +29,5 @@ class GroceryItem(BaseModel):
         self.recipe = None
 
     async def link_to(self, recipes):
+        """Link to transformed recipe model."""
         self.recipe = next((recipe for recipe in recipes if recipe.uid == self.recipe_uid), None)

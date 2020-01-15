@@ -1,3 +1,4 @@
+"""Category data model."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -23,5 +24,7 @@ class Category(BaseModel):
         self.parent_category = None
 
     async def link_to(self, categories):
+        """Link categories to parents."""
         self.parent_category = next(
-            (parent_category for parent_category in categories if parent_category.uid == self.parent_uid), None)
+            (parent_category for parent_category in categories if
+             parent_category.uid == self.parent_uid), None)

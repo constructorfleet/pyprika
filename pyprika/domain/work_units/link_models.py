@@ -1,3 +1,4 @@
+"""Unit of work to link related models via relational identifier."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 

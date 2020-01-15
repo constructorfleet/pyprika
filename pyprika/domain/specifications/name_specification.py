@@ -1,3 +1,4 @@
+"""Specification matching for recipe name."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.specification.specification import Specification
 

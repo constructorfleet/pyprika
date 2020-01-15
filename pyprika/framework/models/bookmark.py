@@ -1,3 +1,4 @@
+"""Bookmark resource."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 

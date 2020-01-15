@@ -1,4 +1,5 @@
-from pyprika.framework.specification.nullary_composite_specification import NullaryCompositeSpecification
+from pyprika.framework.specification.nullary_composite_specification import \
+    NullaryCompositeSpecification
 
 
 class TrueSpecification(NullaryCompositeSpecification):

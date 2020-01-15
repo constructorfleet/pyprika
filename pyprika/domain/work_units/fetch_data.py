@@ -1,3 +1,4 @@
+"""Unit of work that fetches data from backend servers."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 

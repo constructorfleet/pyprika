@@ -1,4 +1,4 @@
-from _py_abc import ABCMeta
+"""Base class for data models."""
 from abc import abstractmethod, ABC
 
 

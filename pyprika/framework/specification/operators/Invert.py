@@ -1,4 +1,5 @@
-from pyprika.framework.specification.unary_composite_specification import UnaryCompositeSpecification
+from pyprika.framework.specification.unary_composite_specification import \
+    UnaryCompositeSpecification
 
 
 class Invert(UnaryCompositeSpecification):

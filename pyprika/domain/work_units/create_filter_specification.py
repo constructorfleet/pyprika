@@ -1,3 +1,4 @@
+"""Create filter specification based on provided inputts."""
 import logging
 
 from pyprika import CategorySpecification

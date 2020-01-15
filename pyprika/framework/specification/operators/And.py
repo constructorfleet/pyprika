@@ -1,4 +1,5 @@
-from pyprika.framework.specification.multary_composite_specification import MultaryCompositeSpecification
+from pyprika.framework.specification.multary_composite_specification import \
+    MultaryCompositeSpecification
 
 
 class And(MultaryCompositeSpecification):

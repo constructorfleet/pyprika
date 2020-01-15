@@ -1,3 +1,4 @@
+"""Unit of work that filters recipes by a given specification."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
@@ -11,4 +12,6 @@ class FilterRecipes(WorkUnit):
         auto_init()
 
     async def perform_work(self, specification):
-        return [recipe.name for recipe in self.domain_data_store.data.recipes if specification.is_satisfied_by(recipe)]
+        """Perform the unit of work."""
+        return [recipe.name for recipe in self.domain_data_store.data.recipes if
+                specification.is_satisfied_by(recipe)]

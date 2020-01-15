@@ -1,3 +1,4 @@
+"""Menu item data model."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -25,5 +26,6 @@ class MenuItem(BaseModel):
         self.recipe = None
 
     async def link_to(self, menus, recipes):
+        """Link to the associated menu and recipe models."""
         self.menu = next((menu for menu in menus if menu.uid == self.menu_uid), None)
         self.recipe = next((recipe for recipe in recipes if recipe.uid == self.recipe_uid), None)

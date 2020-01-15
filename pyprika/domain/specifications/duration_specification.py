@@ -1,3 +1,4 @@
+"""Specification matching for recipe duration."""
 import re
 
 from pyprika.common.utils import auto_init

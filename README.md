@@ -6,3 +6,7 @@ Python Package to talk to Paprika's backend server.
 * Recipes, Categories, Meals, Menus are all linked via relational id
 * Ability to filter recipes that include categories, exclude categories, total cook/prep duration, recipe difficulty and recipe names.
 
+## Usage
+
+Initialize the 
+

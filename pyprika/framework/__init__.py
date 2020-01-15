@@ -1,0 +1,1 @@
+"""Pyprika library root module."""

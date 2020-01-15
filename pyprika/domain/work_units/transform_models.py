@@ -1,3 +1,4 @@
+"""Uni of work that transforms JSON data to data models."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.containers.model_container import ModelContainer
 from pyprika.framework.models.bookmark import Bookmark
@@ -13,7 +14,7 @@ from pyprika.framework.work_unit_base import WorkUnit
 
 
 class TransformModels(WorkUnit):
-    """Unit of work collecting domain models."""
+    """Unit of work to create domain models."""
 
     __slots__ = ['link_models']
 
@@ -21,8 +22,10 @@ class TransformModels(WorkUnit):
         """Initialize unit of work."""
         auto_init()
 
-    async def perform_work(self, bookmarks, categories, groceries, meals, menus, menu_items, pantry_items, recipes,
+    async def perform_work(self, bookmarks, categories, groceries, meals, menus, menu_items,
+                           pantry_items, recipes,
                            status):
+        """Perform unit of work."""
         model_container = ModelContainer(
             [Bookmark.from_json(bookmark) for bookmark in bookmarks],
             [Category.from_json(category) for category in categories],

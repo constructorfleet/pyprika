@@ -50,7 +50,8 @@ class Pyprika:
             create_filter_specifications
         )
 
-        _ = asyncio.get_event_loop().run_until_complete(self._work_unit_container.fetch_data.perform_work())
+        _ = asyncio.get_event_loop().run_until_complete(
+            self._work_unit_container.fetch_data.perform_work())
         self._fetch_schedule = sched.scheduler(time.time, time.sleep)
 
         if auto_fetch:
@@ -58,9 +59,11 @@ class Pyprika:
 
     def _fetch(self):
         def fetch(schedule):
-            self._fetch_event_id = self._fetch_schedule.enter(self._fetch_delay, 1, fetch, (schedule,))
+            self._fetch_event_id = self._fetch_schedule.enter(self._fetch_delay, 1, fetch,
+                                                              (schedule,))
 
-        self._fetch_event_id = self._fetch_schedule.enter(self._fetch_delay, 1, fetch, (self._fetch_schedule,))
+        self._fetch_event_id = self._fetch_schedule.enter(self._fetch_delay, 1, fetch,
+                                                          (self._fetch_schedule,))
         self._fetch_schedule.run()
 
     async def get_all(self):

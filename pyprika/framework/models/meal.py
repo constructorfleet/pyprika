@@ -1,3 +1,4 @@
+"""Meal data model"""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -25,4 +26,5 @@ class Meal(BaseModel):
         self.recipe = None
 
     async def link_to(self, recipes):
+        """Link the meal to the associated recipe."""
         self.recipe = next((recipe for recipe in recipes if recipe.uid == self.recipe_uid), None)

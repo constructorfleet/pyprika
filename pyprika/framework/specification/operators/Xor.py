@@ -1,4 +1,5 @@
-from pyprika.framework.specification.binary_composite_specification import BinaryCompositeSpecification
+from pyprika.framework.specification.binary_composite_specification import \
+    BinaryCompositeSpecification
 
 
 class Xor(BinaryCompositeSpecification):

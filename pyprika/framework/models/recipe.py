@@ -1,3 +1,4 @@
+"""Recipe data model."""
 from pyprika.common.utils import auto_init
 from pyprika.framework.models.base_model import BaseModel
 
@@ -5,8 +6,10 @@ from pyprika.framework.models.base_model import BaseModel
 class Recipe(BaseModel):
     """Model for recipe resource."""
 
-    __slots__ = ['rating', 'photo_hash', 'on_favorites', 'photo', 'scale', 'ingredients', 'source', 'hash',
-                 'source_url', 'difficulty', 'categories', 'photo_url', 'cook_time', 'name', 'created', 'notes',
+    __slots__ = ['rating', 'photo_hash', 'on_favorites', 'photo', 'scale', 'ingredients', 'source',
+                 'hash',
+                 'source_url', 'difficulty', 'categories', 'photo_url', 'cook_time', 'name',
+                 'created', 'notes',
                  'image_url', 'prep_time', 'servings', 'nutritional_info', 'uid']
 
     @staticmethod
@@ -36,16 +39,20 @@ class Recipe(BaseModel):
             recipe_json.get('uid', None)
         )
 
-    def __init__(self, rating, photo_hash, on_favorites, photo, scale, ingredients, source, hash, source_url,
-                 difficulty, categories, photo_url, cook_time, name, created, notes, image_url, prep_time, servings,
+    def __init__(self, rating, photo_hash, on_favorites, photo, scale, ingredients, source, hash,
+                 source_url,
+                 difficulty, categories, photo_url, cook_time, name, created, notes, image_url,
+                 prep_time, servings,
                  nutritional_info, uid):
         """Initialize the model."""
         auto_init()
 
     async def link_to(self, categories):
+        """Link to associated categories."""
         linked_categories = []
         for category_name in self.categories:
-            linked_category = next((category for category in categories if category.name == category_name), None)
+            linked_category = next(
+                (category for category in categories if category.name == category_name), None)
             if not linked_category:
                 continue
             linked_categories.append(linked_category)
@@ -53,4 +60,5 @@ class Recipe(BaseModel):
         setattr(self, 'categories', linked_categories)
 
     def category_names(self):
+        """Get a list of category names."""
         return [category for category in self.categories]

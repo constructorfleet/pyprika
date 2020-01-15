@@ -1,3 +1,4 @@
+"""Data layer container for IoC."""
 from pyprika.common.utils import auto_init
 
 
