@@ -6,7 +6,10 @@ from datetime import timedelta
 
 from pyprika.data.local.domain_data_store import DomainDataStore
 from pyprika.data.remote.paprika_client import PaprikaClient
+from pyprika.domain.specifications.category_specification import CategorySpecification
+from pyprika.domain.work_units.create_filter_specification import CreateFilterSpecification
 from pyprika.domain.work_units.fetch_data import FetchData
+from pyprika.domain.work_units.filter_recipes import FilterRecipes
 from pyprika.domain.work_units.link_models import LinkModels
 from pyprika.domain.work_units.store_models import StoreModels
 from pyprika.domain.work_units.transform_models import TransformModels
@@ -35,12 +38,16 @@ class Pyprika:
             transform_models,
             self._data_container.domain_data_store
         )
+        filter_recipes = FilterRecipes(self._data_container.domain_data_store)
+        create_filter_specifications = CreateFilterSpecification(filter_recipes)
 
         self._work_unit_container = WorkUnitContainer(
             fetch_data,
             transform_models,
             link_models,
-            store_models
+            store_models,
+            filter_recipes,
+            create_filter_specifications
         )
 
         _ = asyncio.get_event_loop().run_until_complete(self._work_unit_container.fetch_data.perform_work())
@@ -59,8 +66,22 @@ class Pyprika:
     async def get_all(self):
         return await self._work_unit_container.fetch_data.perform_work()
 
-    async def get_recipes(self, categories=None, difficulty=None):
-        return
+    async def get_recipes(
+            self,
+            categories=None,
+            not_categories=None,
+            difficulty=None,
+            duration=None,
+            name_like=None,
+            name_not_like=None):
+        return await self._work_unit_container.create_filter_specifications.perform_work(
+            categories=None,
+            not_categories=None,
+            difficulty=None,
+            duration=None,
+            name_like=None,
+            name_not_like=None,
+        )
 
     def set_auto_fetch(self, enabled):
         """Enable or disable auto fetch."""

@@ -45,7 +45,12 @@ class Recipe(BaseModel):
     async def link_to(self, categories):
         linked_categories = []
         for category_name in self.categories:
-            linked_categories.append(
-                next((category for category in categories if category.name == category_name), category_name))
+            linked_category = next((category for category in categories if category.name == category_name), None)
+            if not linked_category:
+                continue
+            linked_categories.append(linked_category)
 
         setattr(self, 'categories', linked_categories)
+
+    def category_names(self):
+        return [category for category in self.categories]
