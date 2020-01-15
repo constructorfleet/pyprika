@@ -1,21 +1,12 @@
 import asyncio
+import json
 import logging
-
 from timeit import default_timer
 
 import async_timeout
 from aiohttp import BasicAuth, ClientSession
 from aiohttp.hdrs import USER_AGENT, ACCEPT
 
-from .models.bookmark import Bookmark
-from .models.category import Category
-from .models.grocery_item import GroceryItem
-from .models.meal import Meal
-from .models.menu import Menu
-from .models.menu_item import MenuItem
-from .models.pantry_item import PantryItem
-from .models.recipe_item import RecipeItem
-from .models.status import Status
 from ..const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,35 +15,30 @@ KEY_RESPONSE = 'resp'
 KEY_URL = 'url'
 KEY_ELAPSED = 'elapsed'
 
-ENDPOINTS = {
-    'bookmarks': Bookmark,
-    'categories': Category,
-    'groceries': GroceryItem,
-    'meals': Meal,
-    'menus': Menu,
-    'menuitems': MenuItem,
-    'pantry': PantryItem,
-    'recipes': RecipeItem,
-    'status': Status
-}
+ENDPOINTS = [
+    'bookmarks',
+    'categories',
+    'groceries',
+    'meals',
+    'menus',
+    'menuitems',
+    'pantry',
+    'recipes',
+    'status'
+]
 
 
-async def fetch(url, session):
+async def _fetch(url, session):
     """ Fetch a single URL """
+
     with async_timeout.timeout(10):
-        async with session.get("%s/%s" % (BASE_URL, url)) as response:
+        async with session.get("%s%s" % (BASE_URL, url)) as response:
             before_request = default_timer()
-            resp = await response.json()
+            resp = await response.read()
             elapsed = default_timer() - before_request
 
-            _LOGGER.debug(
-                "URL {} took {}",
-                url,
-                elapsed
-            )
-
             return {
-                KEY_RESPONSE: resp,
+                KEY_RESPONSE: json.loads(resp).get("result"),
                 KEY_URL: url,
                 KEY_ELAPSED: elapsed
             }
@@ -60,6 +46,8 @@ async def fetch(url, session):
 
 class PaprikaClient:
     """Client to connect to Paprika backend servers."""
+
+    last_fetch_timestamp = None
 
     def __init__(self, username, password):
         """Initialize the client."""
@@ -77,18 +65,44 @@ class PaprikaClient:
         for result in results:
             url = result[KEY_URL]
             response = result[KEY_RESPONSE]
-            model_class = ENDPOINTS[url]
 
-
-
+            self.__setattr__(url, response)
 
     async def fetch_all(self):
         """Fetch all data from the backend servers."""
         tasks = []
 
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
-            for url in list(ENDPOINTS.keys()):
-                task = asyncio.ensure_future(fetch(url, session))
+            for url in ENDPOINTS:
+                task = asyncio.ensure_future(_fetch(url, session))
                 tasks.append(task)
 
             fetch_results = await asyncio.gather(*tasks)
+            self._process_responses(fetch_results)
+
+    def get_bookmarks(self):
+        return self.__getattribute__('bookmarks')
+
+    def get_categories(self):
+        return self.__getattribute__('categories')
+
+    def get_groceries(self):
+        return self.__getattribute__('groceries')
+
+    def get_meals(self):
+        return self.__getattribute__('meals')
+
+    def get_menus(self):
+        return self.__getattribute__('menus')
+
+    def get_menu_items(self):
+        return self.__getattribute__('menuitems')
+
+    def get_pantry_items(self):
+        return self.__getattribute__('pantry')
+
+    def get_recipes(self):
+        return self.__getattribute__('recipes')
+
+    def get_status(self):
+        return self.__getattribute__('status')
