@@ -12,8 +12,12 @@ from ..const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
 _LOGGER = logging.getLogger(__name__)
 
 KEY_RESPONSE = 'resp'
-KEY_URL = 'url'
+KEY_ATTR = 'url'
 KEY_ELAPSED = 'elapsed'
+
+ATTR_RECIPES = 'recipes'
+ATTR_RECIPE_ITEMS = 'recipe_items'
+RECIPE_ENDPOINT = 'recipe/%s'
 
 ENDPOINTS = [
     'bookmarks',
@@ -23,12 +27,12 @@ ENDPOINTS = [
     'menus',
     'menuitems',
     'pantry',
-    'recipes',
+    ATTR_RECIPES,
     'status'
 ]
 
 
-async def _fetch(url, session):
+async def _fetch(url, session, attr_override=None):
     """ Fetch a single URL """
 
     with async_timeout.timeout(10):
@@ -39,7 +43,7 @@ async def _fetch(url, session):
 
             return {
                 KEY_RESPONSE: json.loads(resp).get("result"),
-                KEY_URL: url,
+                KEY_ATTR: url if not attr_override else attr_override,
                 KEY_ELAPSED: elapsed
             }
 
@@ -63,7 +67,7 @@ class PaprikaClient:
     def _process_responses(self, results):
         """Process the responses from fetch_all."""
         for result in results:
-            url = result[KEY_URL]
+            url = result[KEY_ATTR]
             response = result[KEY_RESPONSE]
 
             self.__setattr__(url, response)
@@ -74,11 +78,21 @@ class PaprikaClient:
 
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
             for url in ENDPOINTS:
-                task = asyncio.ensure_future(_fetch(url, session))
+                attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
+                task = asyncio.ensure_future(_fetch(url, session, attr_override))
                 tasks.append(task)
 
             fetch_results = await asyncio.gather(*tasks)
             self._process_responses(fetch_results)
+
+            try:
+                recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
+                tasks = [asyncio.ensure_future(_fetch(RECIPE_ENDPOINT % recipe_item['uid'], session, ATTR_RECIPES)) for
+                         recipe_item in recipe_items if recipe_item.get('uid', None)]
+                fetch_results = await asyncio.gather(*tasks)
+                self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
+            except AttributeError:
+                self.__setattr__(ATTR_RECIPES, [])
 
     def get_bookmarks(self):
         return self.__getattribute__('bookmarks')
