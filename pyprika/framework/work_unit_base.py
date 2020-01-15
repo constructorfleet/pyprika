@@ -7,4 +7,3 @@ class WorkUnit(ABC):
     @abstractmethod
     async def perform_work(self, *args, **kwargs):
         """Perform work unit."""
-        pass
