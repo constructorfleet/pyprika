@@ -1,5 +1,10 @@
+from pyprika.common.utils import auto_init
+
+
 class RecipeItem:
     """Model for recipe item resource."""
+
+    __slots__ = ['hash', 'uid']
 
     @staticmethod
     def from_json(json_response):
@@ -10,6 +15,5 @@ class RecipeItem:
         )
 
     def __init__(self, hash, uid):
-        """Initialze the model."""
-        self._hash = hash
-        self._uid = uid
+        """Initialize the model."""
+        auto_init()
