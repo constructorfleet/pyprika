@@ -7,17 +7,17 @@ class Status:
     __slots__ = ['recipes', 'pantry', 'meals', 'menus', 'groceries', 'bookmarks', 'menu_items', 'categories']
 
     @staticmethod
-    def from_json(json_response):
+    def from_json(status_json):
         """Create model from json."""
         return Status(
-            json_response.get('recipes', 0),
-            json_response.get('pantry', 0),
-            json_response.get('meals', 0),
-            json_response.get('menu', 0),
-            json_response.get('groceries', 0),
-            json_response.get('bookmarks', 0),
-            json_response.get('menuitems', 0),
-            json_response.get('categories', 0)
+            status_json.get('recipes', 0),
+            status_json.get('pantry', 0),
+            status_json.get('meals', 0),
+            status_json.get('menu', 0),
+            status_json.get('groceries', 0),
+            status_json.get('bookmarks', 0),
+            status_json.get('menuitems', 0),
+            status_json.get('categories', 0)
         )
 
     def __init__(self, recipes, pantry, meals, menus, groceries, bookmarks, menu_items, categories):

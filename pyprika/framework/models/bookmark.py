@@ -7,13 +7,13 @@ class Bookmark:
     __slots__ = ['url', 'title', 'uid', 'order_flag']
 
     @staticmethod
-    def from_json(json_response):
+    def from_json(bookmark_json):
         """Create model from json."""
         return Bookmark(
-            json_response.get('url', None),
-            json_response.get('title', None),
-            json_response.get('uid', None),
-            json_response.get('order_flag', None)
+            bookmark_json.get('url', None),
+            bookmark_json.get('title', None),
+            bookmark_json.get('uid', None),
+            bookmark_json.get('order_flag', None)
         )
 
     def __init__(self, url, title, uid, order_flag):

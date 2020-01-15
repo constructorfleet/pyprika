@@ -7,13 +7,13 @@ class Menu:
     __slots__ = ['name', 'notes', 'uid', 'order_flag']
 
     @staticmethod
-    def from_json(json_response):
+    def from_json(mean_json):
         """Create model from json."""
         return Menu(
-            json_response.get('name', None),
-            json_response.get('notes', None),
-            json_response.get('uid', None),
-            json_response.get('order_flag', None)
+            mean_json.get('name', None),
+            mean_json.get('notes', None),
+            mean_json.get('uid', None),
+            mean_json.get('order_flag', None)
         )
 
     def __init__(self, name, notes, uid, order_flag):

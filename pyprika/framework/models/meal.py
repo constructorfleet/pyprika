@@ -4,19 +4,23 @@ from pyprika.common.utils import auto_init
 class Meal:
     """Model for a meal resource."""
 
-    __slots__ = ['name', 'type', 'date', 'uid', 'recipe_uid', 'order_flag']
+    __slots__ = ['name', 'type', 'date', 'uid', 'recipe_uid', 'order_flag', 'recipe']
 
     @staticmethod
-    def from_json(json_response):
+    def from_json(meal_json, recipes):
         """Create model from json."""
-        return Meal(
-            json_response.get('name', None),
-            json_response.get('type', None),
-            json_response.get('date', None),
-            json_response.get('uid', None),
-            json_response.get('recipe_uid', None),
-            json_response.get('order_flag', None)
+        meal = Meal(
+            meal_json.get('name', None),
+            meal_json.get('type', None),
+            meal_json.get('date', None),
+            meal_json.get('uid', None),
+            meal_json.get('recipe_uid', None),
+            meal_json.get('order_flag', None)
         )
+
+        meal.recipe = next((recipe for recipe in recipes if recipe.uid == meal.recipe_uid), None)
+
+        return meal
 
     def __init__(self, name, meal_type, meal_date, uid, recipe_uid, order_flag):
         """Initialize the model."""

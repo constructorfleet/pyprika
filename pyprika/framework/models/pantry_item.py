@@ -7,12 +7,12 @@ class PantryItem:
     __slots__ = ['aisle', 'ingredient', 'uid']
 
     @staticmethod
-    def from_json(json_response):
+    def from_json(pantry_item_json):
         """Create model from json."""
         return PantryItem(
-            json_response.get('aisle', None),
-            json_response.get('ingredient', None),
-            json_response.get('uid', None)
+            pantry_item_json.get('aisle', None),
+            pantry_item_json.get('ingredient', None),
+            pantry_item_json.get('uid', None)
         )
 
     def __init__(self, aisle, ingredient, uid):
