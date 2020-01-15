@@ -75,12 +75,12 @@ class Pyprika:
             name_like=None,
             name_not_like=None):
         return await self._work_unit_container.create_filter_specifications.perform_work(
-            categories=None,
-            not_categories=None,
-            difficulty=None,
-            duration=None,
-            name_like=None,
-            name_not_like=None,
+            categories=categories,
+            not_categories=not_categories,
+            difficulty=difficulty,
+            duration=duration,
+            name_like=name_like,
+            name_not_like=name_not_like,
         )
 
     def set_auto_fetch(self, enabled):
