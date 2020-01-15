@@ -13,3 +13,4 @@ class StoreModels(WorkUnit):
 
     async def perform_work(self, model_container):
         self.domain_data_store.data = model_container
+        return model_container

@@ -34,4 +34,4 @@ class TransformModels(WorkUnit):
             [Recipe.from_json(recipe) for recipe in recipes],
             Status.from_json(status)
         )
-        await self.link_models.perform_work(model_container)
+        return await self.link_models.perform_work(model_container)

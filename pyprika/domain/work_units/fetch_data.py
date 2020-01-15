@@ -2,19 +2,22 @@ from pyprika.common.utils import auto_init
 from pyprika.framework.work_unit_base import WorkUnit
 
 
-class RetrieveModels(WorkUnit):
+class FetchData(WorkUnit):
     """Retrieve models unit of work."""
 
-    __slots__ = ['client', 'transform_models']
+    __slots__ = ['client', 'transform_models', 'domain_data_store']
 
-    def __init__(self, client, transform_models):
+    def __init__(self, client, transform_models, domain_data_store):
         """Initialize unit of work."""
         auto_init()
 
     async def perform_work(self):
         """Perform work unit."""
+        if not self.domain_data_store.should_fetch:
+            return self.domain_data_store.data
+
         await self.client.fetch_all()
-        await self.transform_models.perform_work(
+        return await self.transform_models.perform_work(
             bookmarks=self.client.get_bookmarks(),
             categories=self.client.get_categories(),
             groceries=self.client.get_groceries(),

@@ -33,7 +33,7 @@ ENDPOINTS = [
 
 
 async def _fetch(url, session, attr_override=None):
-    """ Fetch a single URL """
+    """Fetch a single URL """
 
     with async_timeout.timeout(10):
         async with session.get("%s%s" % (BASE_URL, url)) as response:
@@ -50,8 +50,6 @@ async def _fetch(url, session, attr_override=None):
 
 class PaprikaClient:
     """Client to connect to Paprika backend servers."""
-
-    last_fetch_timestamp = None
 
     def __init__(self, username, password):
         """Initialize the client."""

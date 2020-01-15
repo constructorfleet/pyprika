@@ -25,4 +25,4 @@ class LinkModels(WorkUnit):
         for grocery_item in model_container.groceries:
             grocery_item.link_to(model_container.recipes)
 
-        self.store_models.perform_work(model_container)
+        return await self.store_models.perform_work(model_container)
