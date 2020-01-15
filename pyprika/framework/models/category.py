@@ -4,7 +4,7 @@ from pyprika.common.utils import auto_init
 class Category:
     """Model for category resource."""
 
-    __slots__ = ['name', 'uid', 'parent_uid', 'orrder_flag']
+    __slots__ = ['name', 'uid', 'parent_uid', 'order_flag']
 
     @staticmethod
     def from_json(json_response):
