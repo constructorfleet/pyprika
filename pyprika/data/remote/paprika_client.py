@@ -37,7 +37,7 @@ async def _fetch(url, session, attr_override=None):
     """Fetch a single URL """
 
     with async_timeout.timeout(10):
-        async with session.get("%s%s" % (BASE_URL, url)) as response:
+        async with session.get("%s%s" % (BASE_URL, url), allow_redirects=True) as response:
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
