@@ -1,12 +1,13 @@
 """Client for communicating with the Paprika servers."""
 import asyncio
+import base64
 import json
 import logging
 from timeit import default_timer
 
 import async_timeout
 from aiohttp import BasicAuth, ClientSession
-from aiohttp.hdrs import USER_AGENT, ACCEPT
+from aiohttp.hdrs import USER_AGENT, ACCEPT, AUTHORIZATION
 
 from pyprika.const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
 
@@ -33,7 +34,7 @@ ENDPOINTS = [
 ]
 
 
-async def _fetch(auth, headers, url, session, attr_override=None):
+async def _fetch(headers, url, session, attr_override=None):
     """Fetch a single URL """
     end_point = url if url.endswith('/') else (url + '/')
     uri = "%s%s" % (BASE_URL, end_point)
@@ -41,7 +42,6 @@ async def _fetch(auth, headers, url, session, attr_override=None):
         _LOGGER.warning("Full URI {}".format(uri))
         async with session.get(
                 uri,
-                auth=auth,
                 headers=headers,
                 allow_redirects=True) as response:
             before_request = default_timer()
@@ -62,13 +62,10 @@ class PaprikaClient:
 
     def __init__(self, username, password):
         """Initialize the client."""
-        self._auth = BasicAuth(
-            login=username,
-            password=password
-        )
         self._headers = {
             USER_AGENT: CLIENT_USER_AGENT,
-            ACCEPT: APPLICATION_JSON
+            ACCEPT: APPLICATION_JSON,
+            AUTHORIZATION: 'Basic %s' % base64.b64encode(username + ':' + password)
         }
 
     def _process_responses(self, results):
@@ -84,12 +81,11 @@ class PaprikaClient:
         """Fetch all data from the backend servers."""
         tasks = []
         _LOGGER.warning("Creating client session")
-        async with ClientSession(auth=self._auth, headers=self._headers) as session:
+        async with ClientSession() as session:
             for url in ENDPOINTS:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
                 task = asyncio.ensure_future(
                     _fetch(
-                        self._auth,
                         self._headers,
                         url,
                         session,
@@ -106,11 +102,10 @@ class PaprikaClient:
             try:
                 recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
                 if not recipe_items:
-                    _LOGGER.warning("NO RECIPEITEMS")
+                    _LOGGER.warning("NO RECIPE_ITEMS")
                     return
                 tasks = [asyncio.ensure_future(
                     _fetch(
-                        self._auth,
                         self._headers,
                         RECIPE_ENDPOINT % recipe_item['uid'],
                         session,
