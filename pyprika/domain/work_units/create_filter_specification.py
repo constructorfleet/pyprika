@@ -41,11 +41,16 @@ class CreateFilterSpecification(WorkUnit):
                      limit=10):
         """Perform unit of work."""
         specification = TrueSpecification()
-        specification &= _build_specification(categories, CategorySpecification)
-        specification &= _build_specification(not_categories, CategorySpecification, True)
-        specification &= _build_specification(difficulty, DifficultySpecification)
-        specification &= _build_specification(name_like, NameSpecification)
-        specification &= _build_specification(name_not_like, NameSpecification, True)
+        if categories:
+            specification &= _build_specification(categories, CategorySpecification)
+        if not_categories:
+            specification &= _build_specification(not_categories, CategorySpecification, True)
+        if difficulty:
+            specification &= _build_specification(difficulty, DifficultySpecification)
+        if name_like:
+            specification &= _build_specification(name_like, NameSpecification)
+        if name_not_like:
+            specification &= _build_specification(name_not_like, NameSpecification, True)
         try:
             float_duration = float(duration)
             specification &= _build_specification([float_duration], DurationSpecification)
