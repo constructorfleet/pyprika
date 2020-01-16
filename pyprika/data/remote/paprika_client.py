@@ -65,7 +65,7 @@ class PaprikaClient:
         self._headers = {
             USER_AGENT: CLIENT_USER_AGENT,
             ACCEPT: APPLICATION_JSON,
-            AUTHORIZATION: 'Basic %s' % base64.b64encode(username + ':' + password)
+            AUTHORIZATION: BasicAuth(username, password).encode()
         }
 
     def _process_responses(self, results):
