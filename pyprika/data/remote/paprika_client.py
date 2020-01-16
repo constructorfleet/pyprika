@@ -84,48 +84,51 @@ class PaprikaClient:
             fetch_results = await asyncio.gather(*tasks)
             self._process_responses(fetch_results)
 
+            self.__setattr__(ATTR_RECIPES, [])
             try:
                 recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
+                if not recipe_items:
+                    return
                 tasks = [asyncio.ensure_future(
                     _fetch(RECIPE_ENDPOINT % recipe_item['uid'], session, ATTR_RECIPES)) for
                     recipe_item in recipe_items if recipe_item.get('uid', None)]
                 fetch_results = await asyncio.gather(*tasks)
                 self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
-            except AttributeError:
-                self.__setattr__(ATTR_RECIPES, [])
+            except Exception as err:
+                _LOGGER.error(str(err))
 
     def get_bookmarks(self):
         """Get bookmark json resources."""
-        return self.__getattribute__('bookmarks')
+        return self.__getattribute__('bookmarks') or []
 
     def get_categories(self):
         """Get category json resources."""
-        return self.__getattribute__('categories')
+        return self.__getattribute__('categories') or []
 
     def get_groceries(self):
         """Get grocery json resources."""
-        return self.__getattribute__('groceries')
+        return self.__getattribute__('groceries') or []
 
     def get_meals(self):
         """Get meal json resources."""
-        return self.__getattribute__('meals')
+        return self.__getattribute__('meals') or []
 
     def get_menus(self):
         """Get menu json resources."""
-        return self.__getattribute__('menus')
+        return self.__getattribute__('menus') or []
 
     def get_menu_items(self):
         """Get menu item json resources."""
-        return self.__getattribute__('menuitems')
+        return self.__getattribute__('menuitems') or []
 
     def get_pantry_items(self):
         """Get pantry item json resources."""
-        return self.__getattribute__('pantry')
+        return self.__getattribute__('pantry') or []
 
     def get_recipes(self):
         """Get recipes json resources."""
-        return self.__getattribute__('recipes')
+        return self.__getattribute__('recipes') or []
 
     def get_status(self):
         """Get recipe book status json resources."""
-        return self.__getattribute__('status')
+        return self.__getattribute__('status') or {}

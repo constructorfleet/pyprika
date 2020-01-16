@@ -1,11 +1,8 @@
-"""Create filter specification based on provided inputts."""
+"""Create filter specifications based on provided inputts."""
 import logging
 
-from pyprika import CategorySpecification
-from pyprika.domain.specifications.difficulty_specification import DifficultySpecification
-from pyprika.domain.specifications.duration_specification import DurationSpecification
-from pyprika.domain.specifications.name_specification import NameSpecification
-from pyprika.framework.specification.true_specification import TrueSpecification
+from pyprika.domain.specifications import *
+from pyprika.framework.specifications import TrueSpecification
 from pyprika.framework.work_unit_base import WorkUnit
 
 _LOGGER = logging.getLogger(__name__)

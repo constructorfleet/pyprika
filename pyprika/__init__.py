@@ -7,7 +7,6 @@ from datetime import timedelta
 
 from pyprika.data.local.domain_data_store import DomainDataStore
 from pyprika.data.remote.paprika_client import PaprikaClient
-from pyprika.domain.specifications.category_specification import CategorySpecification
 from pyprika.domain.work_units.create_filter_specification import CreateFilterSpecification
 from pyprika.domain.work_units.fetch_data import FetchData
 from pyprika.domain.work_units.filter_recipes import FilterRecipes

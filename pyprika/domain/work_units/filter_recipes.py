@@ -1,4 +1,4 @@
-"""Unit of work that filters recipes by a given specification."""
+"""Unit of work that filters recipes by a given specifications."""
 from pyprika.framework.work_unit_base import WorkUnit
 
 

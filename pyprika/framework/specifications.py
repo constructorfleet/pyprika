@@ -1,10 +1,4 @@
-from pyprika.framework.specifications import MultaryCompositeSpecification
-from pyprika.framework.specifications.binary_composite_specification import \
-    BinaryCompositeSpecification
-from pyprika.framework.specifications.multary_composite_specification import \
-    MultaryCompositeSpecification
-from pyprika.framework.specifications.unary_composite_specification import \
-    UnaryCompositeSpecification
+from abc import ABC
 
 
 class Specification:
@@ -29,6 +23,16 @@ class Specification:
             return None
         else:
             return self
+
+
+class CompositeSpecification(Specification, ABC):
+    pass
+
+
+class MultaryCompositeSpecification(CompositeSpecification, ABC):
+
+    def __init__(self, *specifications):
+        self.specifications = specifications
 
 
 class And(MultaryCompositeSpecification):
@@ -62,6 +66,12 @@ class And(MultaryCompositeSpecification):
         return And(*non_satisfied)
 
 
+class UnaryCompositeSpecification(CompositeSpecification, ABC):
+
+    def __init__(self, specification):
+        self.specification = specification
+
+
 class Invert(UnaryCompositeSpecification):
 
     def is_satisfied_by(self, candidate):
@@ -85,6 +95,13 @@ class Or(MultaryCompositeSpecification):
         return satisfied
 
 
+class BinaryCompositeSpecification(CompositeSpecification, ABC):
+
+    def __init__(self, left, right):
+        self.left = left
+        self.right = right
+
+
 class Xor(BinaryCompositeSpecification):
 
     def is_satisfied_by(self, candidate):
@@ -92,3 +109,19 @@ class Xor(BinaryCompositeSpecification):
                 self.left.is_satisfied_by(candidate) ^
                 self.right.is_satisfied_by(candidate)
         )
+
+
+class NullaryCompositeSpecification(CompositeSpecification, ABC):
+    pass
+
+
+class FalseSpecification(NullaryCompositeSpecification):
+
+    def is_satisfied_by(self, candidate):
+        return False
+
+
+class TrueSpecification(NullaryCompositeSpecification):
+
+    def is_satisfied_by(self, candidate):
+        return True
