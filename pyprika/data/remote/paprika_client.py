@@ -33,13 +33,17 @@ ENDPOINTS = [
 ]
 
 
-async def _fetch(url, session, attr_override=None):
+async def _fetch(auth, headers, url, session, attr_override=None):
     """Fetch a single URL """
     end_point = url if url.endswith('/') else (url + '/')
     uri = "%s%s" % (BASE_URL, end_point)
     with async_timeout.timeout(10):
         _LOGGER.warning("Full URI {}".format(uri))
-        async with session.get(uri, allow_redirects=True) as response:
+        async with session.get(
+                uri,
+                auth=auth,
+                headers=headers,
+                allow_redirects=True) as response:
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
@@ -83,7 +87,15 @@ class PaprikaClient:
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
             for url in ENDPOINTS:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
-                task = asyncio.ensure_future(_fetch(url, session, attr_override))
+                task = asyncio.ensure_future(
+                    _fetch(
+                        self._auth,
+                        self._headers,
+                        url,
+                        session,
+                        attr_override
+                    )
+                )
                 tasks.append(task)
             _LOGGER.warning("GATHER TASKS")
             fetch_results = await asyncio.gather(*tasks)
@@ -97,8 +109,13 @@ class PaprikaClient:
                     _LOGGER.warning("NO RECIPEITEMS")
                     return
                 tasks = [asyncio.ensure_future(
-                    _fetch(RECIPE_ENDPOINT % recipe_item['uid'], session, ATTR_RECIPES)) for
-                    recipe_item in recipe_items if recipe_item.get('uid', None)]
+                    _fetch(
+                        self._auth,
+                        self._headers,
+                        RECIPE_ENDPOINT % recipe_item['uid'],
+                        session,
+                        ATTR_RECIPES
+                    )) for recipe_item in recipe_items if recipe_item.get('uid', None)]
                 fetch_results = await asyncio.gather(*tasks)
                 self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
             except Exception as err:
