@@ -36,11 +36,15 @@ ENDPOINTS = [
 async def _fetch(url, session, attr_override=None):
     """Fetch a single URL """
     end_point = url if url.endswith('/') else (url + '/')
+    uri = "%s%s" % (BASE_URL, end_point)
     with async_timeout.timeout(10):
-        async with session.get("%s%s" % (BASE_URL, end_point), allow_redirects=True) as response:
+        _LOGGER.warning("Full URI {}".format(uri))
+        async with session.get(uri, allow_redirects=True) as response:
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
+            _LOGGER.warning("Request Duration: {}".format(elapsed))
+            _LOGGER.warning("Request status {}".format(response.status))
 
             return {
                 KEY_RESPONSE: json.loads(resp).get("result"),
