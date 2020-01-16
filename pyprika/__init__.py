@@ -20,7 +20,7 @@ from pyprika.framework.containers.work_unit_container import WorkUnitContainer
 class Pyprika:
     """Main entry point to library."""
 
-    def __init__(self, username, password, fetch_delay=timedelta(hours=2), auto_fetch=False):
+    def __init__(self, username, password, fetch_delay=timedelta(hours=2), auto_fetch=True):
         """Initialize library."""
         self._fetch_event_id = -1
         self._auto_fetch = auto_fetch
