@@ -4,28 +4,13 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    "aiohttp==3.6.2",
-    "astroid==2.3.3",
+    "aiohttp==3.5.4",
     "async-timeout==3.0.1",
     "attrs==19.3.0",
-    "cffi==1.13.2",
     "chardet==3.0.4",
-    "cryptography==2.8",
-    "future==0.18.2",
     "idna==2.8",
-    "isort==4.3.21",
-    "lazy-object-proxy==1.4.3",
-    "mccabe==0.6.1",
-    "multidict==4.7.4",
-    "pycparser==2.19",
-    "pylint==2.4.4",
-    "pyparsing==2.3.1",
-    "pyserial==3.4",
-    "six==1.13.0",
-    "typed-ast==1.4.1",
-    "wrapt==1.11.2",
-    "yarl==1.4.2"
-
+    "multidict==4.6.1",
+    "yarl==1.4.2",
 ]
 
 setup(
