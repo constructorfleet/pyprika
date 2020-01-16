@@ -22,13 +22,14 @@ class BackgroundRefreshData(AsyncWorkUnit):
         self.interval_seconds = interval_seconds
         self._is_running = False
         self._task = None
+        asyncio.set_event_loop(self._loop)
 
     def _loop_in_thread(self):
-        asyncio.set_event_loop(self._loop)
-        try:
-            self._loop.run_until_complete(asyncio.ensure_future(self.perform_work()))
-        except asyncio.CancelledError:
-            pass
+        while True:
+            try:
+                self._loop.run_until_complete(asyncio.ensure_future(self.perform_work()))
+            except asyncio.CancelledError:
+                continue
 
     async def perform_work(self):
         _LOGGER.warning("PERFORMING WORK")
