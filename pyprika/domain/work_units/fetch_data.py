@@ -1,5 +1,9 @@
 """Unit of work that fetches data from backend servers."""
+import logging
+
 from pyprika.framework.work_unit_base import AsyncWorkUnit
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class FetchData(AsyncWorkUnit):
@@ -15,6 +19,7 @@ class FetchData(AsyncWorkUnit):
 
     async def perform_work(self):
         """Perform work unit."""
+        _LOGGER.warning("Invoking client fetch all")
         await self.client.fetch_all()
         return await self.transform_models.perform_work(
             bookmarks=self.client.get_bookmarks(),
