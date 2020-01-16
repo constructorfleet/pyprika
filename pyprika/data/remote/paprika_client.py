@@ -6,7 +6,7 @@ from timeit import default_timer
 
 import async_timeout
 from aiohttp import BasicAuth, ClientSession
-from aiohttp.hdrs import USER_AGENT, ACCEPT
+from aiohttp.hdrs import USER_AGENT, ACCEPT, AUTHORIZATION
 
 from pyprika.const import CLIENT_USER_AGENT, APPLICATION_JSON, BASE_URL
 
@@ -33,7 +33,7 @@ ENDPOINTS = [
 ]
 
 
-async def _fetch(auth, headers, url, session, attr_override=None):
+async def _fetch(headers, url, session, attr_override=None):
     """Fetch a single URL """
     end_point = url if url.endswith('/') else (url + '/')
     uri = "%s%s" % (BASE_URL, end_point)
@@ -41,12 +41,12 @@ async def _fetch(auth, headers, url, session, attr_override=None):
         _LOGGER.warning("Full URI {}".format(uri))
         async with session.get(
                 uri,
-                auth=auth,
                 headers=headers,
                 allow_redirects=True) as response:
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
+
             _LOGGER.warning("Request Duration: {}".format(elapsed))
             _LOGGER.warning("Request status {}".format(response.status))
 
@@ -62,14 +62,16 @@ class PaprikaClient:
 
     def __init__(self, username, password):
         """Initialize the client."""
-        self._auth = BasicAuth(
+        auth = BasicAuth(
             login=username,
             password=password,
             encoding='utf_8'
-        )
+        ).encode()
+        _LOGGER.warning("AUTH HEADER %s" % auth)
         self._headers = {
             USER_AGENT: CLIENT_USER_AGENT,
-            ACCEPT: APPLICATION_JSON
+            ACCEPT: APPLICATION_JSON,
+            AUTHORIZATION: auth
         }
 
     def _process_responses(self, results):
@@ -90,7 +92,6 @@ class PaprikaClient:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
                 task = asyncio.ensure_future(
                     _fetch(
-                        self._auth,
                         self._headers,
                         url,
                         session,
@@ -111,7 +112,6 @@ class PaprikaClient:
                     return
                 tasks = [asyncio.ensure_future(
                     _fetch(
-                        self._auth,
                         self._headers,
                         RECIPE_ENDPOINT % recipe_item['uid'],
                         session,
