@@ -9,10 +9,10 @@ from pyprika.framework.models.menu_item import MenuItem
 from pyprika.framework.models.pantry_item import PantryItem
 from pyprika.framework.models.recipe import Recipe
 from pyprika.framework.models.status import Status
-from pyprika.framework.work_unit_base import WorkUnit
+from pyprika.framework.work_unit_base import AsyncWorkUnit
 
 
-class TransformModels(WorkUnit):
+class TransformModels(AsyncWorkUnit):
     """Unit of work to create domain models."""
 
     __slots__ = ['link_models']

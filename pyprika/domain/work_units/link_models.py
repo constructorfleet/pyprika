@@ -1,8 +1,8 @@
 """Unit of work to link related models via relational identifier."""
-from pyprika.framework.work_unit_base import WorkUnit
+from pyprika.framework.work_unit_base import AsyncWorkUnit
 
 
-class LinkModels(WorkUnit):
+class LinkModels(AsyncWorkUnit):
     """Unit of work linking models via relational ids."""
 
     __slots__ = ['store_models']

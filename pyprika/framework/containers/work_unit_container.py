@@ -3,10 +3,11 @@
 
 class WorkUnitContainer:
     """IoC Container for Work Units."""
-    __slots__ = ['fetch_data', 'transform_models', 'link_models', 'store_models', 'filter_recipes',
-                 'create_filter_specifications']
+    __slots__ = ['background_refresh_data', 'fetch_data', 'transform_models', 'link_models',
+                 'store_models', 'filter_recipes', 'create_filter_specifications']
 
     def __init__(self,
+                 background_data_refresh,
                  fetch_data,
                  transform_models,
                  link_models,
@@ -14,6 +15,8 @@ class WorkUnitContainer:
                  filter_recipes,
                  create_filter_specifications):
         """Initialize container."""
+
+        self.background_refresh_data = background_data_refresh
         self.fetch_data = fetch_data
         self.transform_models = transform_models
         self.link_models = link_models

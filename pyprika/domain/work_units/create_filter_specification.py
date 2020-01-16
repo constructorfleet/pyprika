@@ -31,14 +31,14 @@ class CreateFilterSpecification(WorkUnit):
     def __init__(self, filter_recipes):
         self.filter_recipes = filter_recipes
 
-    async def perform_work(self,
-                           categories=None,
-                           not_categories=None,
-                           difficulty=None,
-                           duration=None,
-                           name_like=None,
-                           name_not_like=None,
-                           limit=10):
+    def perform_work(self,
+                     categories=None,
+                     not_categories=None,
+                     difficulty=None,
+                     duration=None,
+                     name_like=None,
+                     name_not_like=None,
+                     limit=10):
         """Perform unit of work."""
         specification = TrueSpecification()
         specification &= _build_specification(categories, CategorySpecification)
@@ -52,4 +52,4 @@ class CreateFilterSpecification(WorkUnit):
         except ValueError:
             _LOGGER.error("Duration is not a float")
 
-        return await self.filter_recipes.perform_work(specification)
+        return self.filter_recipes.perform_work(specification)

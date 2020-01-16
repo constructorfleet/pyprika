@@ -1,8 +1,8 @@
 """Unit of work that fetches data from backend servers."""
-from pyprika.framework.work_unit_base import WorkUnit
+from pyprika.framework.work_unit_base import AsyncWorkUnit
 
 
-class FetchData(WorkUnit):
+class FetchData(AsyncWorkUnit):
     """Retrieve models unit of work."""
 
     __slots__ = ['client', 'transform_models', 'domain_data_store']
@@ -15,9 +15,6 @@ class FetchData(WorkUnit):
 
     async def perform_work(self):
         """Perform work unit."""
-        if not self.domain_data_store.should_fetch:
-            return self.domain_data_store.data
-
         await self.client.fetch_all()
         return await self.transform_models.perform_work(
             bookmarks=self.client.get_bookmarks(),

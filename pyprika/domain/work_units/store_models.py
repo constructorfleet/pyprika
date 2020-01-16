@@ -1,8 +1,8 @@
 """Unit of work to store retrieved data in local data store."""
-from pyprika.framework.work_unit_base import WorkUnit
+from pyprika.framework.work_unit_base import AsyncWorkUnit
 
 
-class StoreModels(WorkUnit):
+class StoreModels(AsyncWorkUnit):
     """Performs data store update unit of work."""
 
     __slots__ = ['domain_data_store']
