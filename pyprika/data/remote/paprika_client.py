@@ -74,14 +74,15 @@ class PaprikaClient:
     async def fetch_all(self):
         """Fetch all data from the backend servers."""
         tasks = []
-
+        _LOGGER.warning("Creating client session")
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
             for url in ENDPOINTS:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
                 task = asyncio.ensure_future(_fetch(url, session, attr_override))
                 tasks.append(task)
-
+            _LOGGER.warning("GATHER TASKS")
             fetch_results = await asyncio.gather(*tasks)
+            _LOGGER.warning("PROCESSING")
             self._process_responses(fetch_results)
 
             self.__setattr__(ATTR_RECIPES, [])
