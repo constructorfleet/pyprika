@@ -68,6 +68,7 @@ class PaprikaClient:
         for result in results:
             url = result[KEY_ATTR]
             response = result[KEY_RESPONSE]
+            _LOGGER.warning("{} {}".format(url, response))
 
             self.__setattr__(url, response)
 
@@ -89,6 +90,7 @@ class PaprikaClient:
             try:
                 recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
                 if not recipe_items:
+                    _LOGGER.warning("NO RECIPEITEMS")
                     return
                 tasks = [asyncio.ensure_future(
                     _fetch(RECIPE_ENDPOINT % recipe_item['uid'], session, ATTR_RECIPES)) for
