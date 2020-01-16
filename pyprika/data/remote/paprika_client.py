@@ -33,12 +33,11 @@ ENDPOINTS = [
 ]
 
 
-async def _fetch(auth, headers, url, session, attr_override=None):
+async def _fetch(url, session, attr_override=None):
     """Fetch a single URL """
 
     with async_timeout.timeout(10):
-        async with session.get("%s%s" % (BASE_URL, url), auth=auth, headers=headers,
-                               allow_redirects=True) as response:
+        async with session.get("%s%s" % (BASE_URL, url), allow_redirects=True) as response:
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
@@ -80,8 +79,7 @@ class PaprikaClient:
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
             for url in ENDPOINTS:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
-                task = asyncio.ensure_future(
-                    _fetch(self._auth, self._headers, url, session, attr_override))
+                task = asyncio.ensure_future(_fetch(url, session, attr_override))
                 tasks.append(task)
             _LOGGER.warning("GATHER TASKS")
             fetch_results = await asyncio.gather(*tasks)
