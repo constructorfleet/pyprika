@@ -1,6 +1,6 @@
 import asyncio
 import logging
-import signal
+import atexit
 import threading
 
 from pyprika.framework.work_unit_base import AsyncWorkUnit
@@ -15,9 +15,7 @@ class BackgroundRefreshData(AsyncWorkUnit):
 
     def __init__(self, fetch_data, interval_seconds):
         """Initialize the unit of work."""
-        signal.signal(signal.SIGABRT, self._signal_handler)
-        signal.signal(signal.SIGKILL, self._signal_handler)
-        signal.signal(signal.SIGINT, self._signal_handler)
+        atexit.register(self._exit_handler)
 
         self.fetch_data = fetch_data
         self.interval_seconds = interval_seconds
@@ -33,7 +31,7 @@ class BackgroundRefreshData(AsyncWorkUnit):
         except asyncio.CancelledError:
             pass
 
-    def _signal_handler(self, signum, frame):
+    def _exit_handler(self):
         self._running = False
 
     async def perform_work(self):
