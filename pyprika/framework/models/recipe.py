@@ -7,10 +7,9 @@ class Recipe(BaseModel):
     """Model for recipe resource."""
 
     __slots__ = ['rating', 'photo_hash', 'on_favorites', 'photo', 'scale', 'ingredients', 'source',
-                 'hash',
-                 'source_url', 'difficulty', 'categories', 'photo_url', 'cook_time', 'name',
-                 'created', 'notes',
-                 'image_url', 'prep_time', 'servings', 'nutritional_info', 'uid']
+                 'hash', 'directions', 'source_url', 'difficulty', 'categories', 'photo_url',
+                 'cook_time', 'name', 'created', 'notes', 'image_url', 'prep_time', 'servings',
+                 'nutritional_info', 'uid']
 
     @staticmethod
     def from_json(recipe_json):
@@ -36,12 +35,13 @@ class Recipe(BaseModel):
             recipe_json.get('prep_time', None),
             recipe_json.get('servings', None),
             recipe_json.get('nutritional_info', None),
-            recipe_json.get('uid', None)
+            recipe_json.get('uid', None),
+            recipe_json.get('directions', None)
         )
 
     def __init__(self, rating, photo_hash, on_favorites, photo, scale, ingredients, source, hash,
                  source_url, difficulty, categories, photo_url, cook_time, name, created, notes,
-                 image_url, prep_time, servings, nutritional_info, uid):
+                 image_url, prep_time, servings, nutritional_info, uid, directions):
         """Initialize the model."""
         self.rating = rating
         self.photo_hash = photo_hash
@@ -64,6 +64,7 @@ class Recipe(BaseModel):
         self.servings = servings
         self.nutritional_info = nutritional_info
         self.uid = uid
+        self.directions = directions
 
     async def link_to(self, categories):
         """Link to associated categories."""
