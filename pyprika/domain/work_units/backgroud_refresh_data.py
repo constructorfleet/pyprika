@@ -14,14 +14,12 @@ class BackgroundRefreshData(AsyncWorkUnit):
 
     def __init__(self, fetch_data, interval_seconds):
         """Initialize the unit of work."""
+        self.fetch_data = fetch_data
+        self.interval_seconds = interval_seconds
+
         self._loop = asyncio.get_event_loop()
         self._thread = threading.Thread(target=self._loop_in_thread)
         self._thread.start()
-
-        self.fetch_data = fetch_data
-        self.interval_seconds = interval_seconds
-        self._is_running = False
-        self._task = None
 
     def _loop_in_thread(self):
         asyncio.set_event_loop(self._loop)
