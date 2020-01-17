@@ -51,10 +51,12 @@ class CreateFilterSpecification(WorkUnit):
             specification &= _build_specification(name_like, NameSpecification)
         if name_not_like:
             specification &= _build_specification(name_not_like, NameSpecification, True)
-        try:
-            float_duration = float(duration)
-            specification &= _build_specification([float_duration], DurationSpecification)
-        except ValueError:
-            _LOGGER.error("Duration is not a float")
+
+        if duration:
+            try:
+                float_duration = float(duration)
+                specification &= _build_specification([float_duration], DurationSpecification)
+            except ValueError:
+                _LOGGER.error("Duration is not a float")
 
         return self.filter_recipes.perform_work(specification)
