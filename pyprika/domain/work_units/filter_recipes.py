@@ -17,5 +17,5 @@ class FilterRecipes(WorkUnit):
     def perform_work(self, specification):
         """Perform the unit of work."""
         _LOGGER.warning("Recipes: {}".format(len(self.domain_data_store.data.recipes)))
-        return [recipe.name for recipe in self.domain_data_store.data.recipes if
+        return [recipe for recipe in self.domain_data_store.data.recipes if
                 specification.is_satisfied_by(recipe)]
