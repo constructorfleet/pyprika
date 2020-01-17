@@ -42,6 +42,7 @@ class CreateFilterSpecification(WorkUnit):
         """Perform unit of work."""
         specification = TrueSpecification()
         if categories:
+            _LOGGER.error("CATEGORIES {}".format(categories))
             specification &= _build_specification(categories, CategorySpecification)
         if not_categories:
             specification &= _build_specification(not_categories, CategorySpecification, True)
