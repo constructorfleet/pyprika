@@ -115,6 +115,7 @@ class PaprikaClient:
                         ATTR_RECIPES
                     )) for recipe_item in recipe_items if recipe_item.get('uid', None)]
                 fetch_results = await asyncio.gather(*tasks)
+                _LOGGER.warning("RECIPE_FETCH {}".format(fetch_results))
                 self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
             except Exception as err:
                 _LOGGER.error(str(err))
