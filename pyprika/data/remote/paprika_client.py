@@ -64,8 +64,7 @@ class PaprikaClient:
         """Initialize the client."""
         auth = BasicAuth(
             login=username,
-            password=password,
-            encoding='utf_8'
+            password=password
         ).encode()
         _LOGGER.warning("AUTH HEADER %s" % auth)
         self._headers = {
