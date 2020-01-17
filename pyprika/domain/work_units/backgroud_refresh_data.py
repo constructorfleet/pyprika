@@ -31,9 +31,6 @@ class BackgroundRefreshData(AsyncWorkUnit):
             pass
 
     async def perform_work(self):
-        _LOGGER.warning("PERFORMING WORK")
         while True:
-            _LOGGER.warning("FETCHING DATA")
             await self.fetch_data.perform_work()
-            _LOGGER.warning("GOING TO SLEEP")
             await asyncio.sleep(self.interval_seconds)

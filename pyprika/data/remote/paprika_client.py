@@ -38,7 +38,6 @@ async def _fetch(auth, headers, url, session, attr_override=None):
     end_point = url if url.endswith('/') else (url + '/')
     uri = "%s%s" % (BASE_URL, end_point)
     with async_timeout.timeout(10):
-        _LOGGER.warning("Full URI {}".format(uri))
         async with session.get(
                 uri,
                 auth=auth,
@@ -47,9 +46,6 @@ async def _fetch(auth, headers, url, session, attr_override=None):
             before_request = default_timer()
             resp = await response.read()
             elapsed = default_timer() - before_request
-
-            _LOGGER.warning("Request Duration: {}".format(elapsed))
-            _LOGGER.warning("Request status {}".format(response.status))
 
             return {
                 KEY_RESPONSE: json.loads(resp).get("result"),
@@ -74,14 +70,12 @@ class PaprikaClient:
         for result in results:
             url = result[KEY_ATTR]
             response = result[KEY_RESPONSE]
-            _LOGGER.warning("{} {}".format(url, response))
 
             self.__setattr__(url, response)
 
     async def fetch_all(self):
         """Fetch all data from the backend servers."""
         tasks = []
-        _LOGGER.warning("Creating client session")
         async with ClientSession(auth=self._auth, headers=self._headers) as session:
             for url in ENDPOINTS:
                 attr_override = ATTR_RECIPE_ITEMS if url == ATTR_RECIPES else None
@@ -95,16 +89,13 @@ class PaprikaClient:
                     )
                 )
                 tasks.append(task)
-            _LOGGER.warning("GATHER TASKS")
             fetch_results = await asyncio.gather(*tasks)
-            _LOGGER.warning("PROCESSING")
             self._process_responses(fetch_results)
 
             self.__setattr__(ATTR_RECIPES, [])
             try:
                 recipe_items = self.__getattribute__(ATTR_RECIPE_ITEMS)
                 if not recipe_items:
-                    _LOGGER.warning("NO RECIPEITEMS")
                     return
                 tasks = [asyncio.ensure_future(
                     _fetch(
@@ -115,7 +106,6 @@ class PaprikaClient:
                         ATTR_RECIPES
                     )) for recipe_item in recipe_items if recipe_item.get('uid', None)]
                 fetch_results = await asyncio.gather(*tasks)
-                _LOGGER.warning("RECIPE_FETCH {}".format(fetch_results))
                 self.__setattr__(ATTR_RECIPES, [result[KEY_RESPONSE] for result in fetch_results])
             except Exception as err:
                 _LOGGER.error(str(err))

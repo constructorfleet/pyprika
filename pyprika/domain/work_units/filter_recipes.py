@@ -1,5 +1,9 @@
 """Unit of work that filters recipes by a given specifications."""
+import logging
+
 from pyprika.framework.work_unit_base import WorkUnit
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class FilterRecipes(WorkUnit):
@@ -12,5 +16,6 @@ class FilterRecipes(WorkUnit):
 
     def perform_work(self, specification):
         """Perform the unit of work."""
+        _LOGGER.warning("Recipes: {}".format(len(self.domain_data_store.data.recipes)))
         return [recipe.name for recipe in self.domain_data_store.data.recipes if
                 specification.is_satisfied_by(recipe)]
