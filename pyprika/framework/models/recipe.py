@@ -78,6 +78,7 @@ class Recipe(BaseModel):
 
         setattr(self, 'categories', linked_categories)
 
+    @property
     def category_names(self):
         """Get a list of category names."""
         return [category for category in self.categories]
