@@ -25,4 +25,7 @@ class LinkModels(AsyncWorkUnit):
         for grocery_item in model_container.groceries:
             await grocery_item.link_to(model_container.recipes)
 
+        for recipe in model_container.recipes:
+            await recipe.link_to(model_container.categories)
+
         return await self.store_models.perform_work(model_container)

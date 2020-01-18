@@ -7,9 +7,9 @@ class Recipe(BaseModel):
     """Model for recipe resource."""
 
     __slots__ = ['rating', 'photo_hash', 'on_favorites', 'photo', 'scale', 'ingredients', 'source',
-                 'hash', 'directions', 'source_url', 'difficulty', 'categories', 'photo_url',
+                 'hash', 'directions', 'source_url', 'difficulty', 'category_uids', 'photo_url',
                  'cook_time', 'name', 'created', 'notes', 'image_url', 'prep_time', 'servings',
-                 'nutritional_info', 'uid']
+                 'nutritional_info', 'uid', 'categories']
 
     @staticmethod
     def from_json(recipe_json):
@@ -40,7 +40,7 @@ class Recipe(BaseModel):
         )
 
     def __init__(self, rating, photo_hash, on_favorites, photo, scale, ingredients, source, hash,
-                 source_url, difficulty, categories, photo_url, cook_time, name, created, notes,
+                 source_url, difficulty, category_uids, photo_url, cook_time, name, created, notes,
                  image_url, prep_time, servings, nutritional_info, uid, directions):
         """Initialize the model."""
         self.rating = rating
@@ -53,7 +53,7 @@ class Recipe(BaseModel):
         self.hash = hash
         self.source_url = source_url
         self.difficulty = difficulty
-        self.categories = categories
+        self.category_uids = category_uids
         self.photo_url = photo_url
         self.cook_time = cook_time
         self.name = name
@@ -69,9 +69,9 @@ class Recipe(BaseModel):
     async def link_to(self, categories):
         """Link to associated categories."""
         linked_categories = []
-        for category_name in self.categories:
+        for category_uid in self.category_uids:
             linked_category = next(
-                (category for category in categories if category.name == category_name), None)
+                (category for category in categories if category.uid == category_uid), None)
             if not linked_category:
                 continue
             linked_categories.append(linked_category)
@@ -81,4 +81,7 @@ class Recipe(BaseModel):
     @property
     def category_names(self):
         """Get a list of category names."""
-        return [category for category in self.categories]
+        return [category.name for category in self.categories]
+
+    def __str__(self) -> str:
+        return "{} {}".format(self.name, self.category_names)

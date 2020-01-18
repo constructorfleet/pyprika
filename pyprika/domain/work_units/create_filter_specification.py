@@ -16,9 +16,9 @@ def _build_specification(values, spec_type, invert=False):
     specification = TrueSpecification()
     for value in values:
         if invert:
-            specification &= ~spec_type(value)
+            specification = specification or ~spec_type(value)
         else:
-            specification |= spec_type(value)
+            specification = specification and spec_type(value)
 
     return specification
 
@@ -43,20 +43,20 @@ class CreateFilterSpecification(WorkUnit):
         specification = TrueSpecification()
         if categories:
             _LOGGER.error("CATEGORIES {}".format(categories))
-            specification &= _build_specification(categories, CategorySpecification)
+            specification = specification and _build_specification(categories, CategorySpecification)
         if not_categories:
-            specification &= _build_specification(not_categories, CategorySpecification, True)
+            specification = specification and _build_specification(not_categories, CategorySpecification, True)
         if difficulty:
-            specification &= _build_specification(difficulty, DifficultySpecification)
+            specification = specification and _build_specification(difficulty, DifficultySpecification)
         if name_like:
-            specification &= _build_specification(name_like, NameSpecification)
+            specification = specification and _build_specification(name_like, NameSpecification)
         if name_not_like:
-            specification &= _build_specification(name_not_like, NameSpecification, True)
+            specification = specification and _build_specification(name_not_like, NameSpecification, True)
 
         if duration:
             try:
                 float_duration = float(duration)
-                specification &= _build_specification([float_duration], DurationSpecification)
+                specification = specification and _build_specification([float_duration], DurationSpecification)
             except ValueError:
                 _LOGGER.error("Duration is not a float")
 

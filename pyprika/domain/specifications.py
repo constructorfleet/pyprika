@@ -34,7 +34,8 @@ class CategorySpecification(Specification):
 
     def is_satisfied_by(self, candidate):
         """Checks if candidate satisfies condition."""
-        return self.category in candidate.category_names
+        return str(self.category).lower() in [str(name).lower() for name in
+                                              candidate.category_names]
 
 
 class DifficultySpecification(Specification):
