@@ -14,7 +14,7 @@ requirements = [
 ]
 
 setup(
-    name='pyprika-client-client',
+    name='pyprika-client',
     version='0.1.0',
     description="AsyncIO Library for Communicating with Paprika backend servers.",
     long_description=readme,
