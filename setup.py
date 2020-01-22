@@ -14,10 +14,11 @@ requirements = [
 ]
 
 setup(
-    name='pyprika',
+    name='pyprika-client-client',
     version='0.1.0',
     description="AsyncIO Library for Communicating with Paprika backend servers.",
     long_description=readme,
+    long_description_content_type="text/markdown; charset=UTF-8",
     author="Teagan Glenn",
     author_email='that@teagantotally.rocks',
     url='https://github.com/constructorfleet/pyprika',
