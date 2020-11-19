@@ -1,0 +1,1 @@
+"""Pyprika API Models."""
