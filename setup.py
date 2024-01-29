@@ -4,7 +4,7 @@ with open('README.md') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    "aiohttp==3.8.5",
+    "aiohttp==3.9.2",
     "async-timeout==3.0.1",
     "attrs==19.3.0",
     "chardet==3.0.4",
